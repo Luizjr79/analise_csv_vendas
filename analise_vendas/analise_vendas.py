@@ -7,10 +7,14 @@ Abre o arquivo 'vendas.csv' em modo de leitura ("r")
 """
 
 with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as arquivo:
-  leitor = csv.reader(arquivo)
+  leitor = csv.DictReader(arquivo)
 
-  cabecalho = next(leitor)
-  print("Cabeçalho: ", cabecalho)
+  # DictReader já cria dicionários com base no cabeçalho do CSV
+  print("Cabeçalho: ", leitor.fieldnames) # Mostra os nomes das colunas
 
   for linha in leitor:
-    print(linha)
+    quantidade = int(linha["quantidade_vendida"])
+    valor_unitario = float(linha["valor_unitario"])
+    valor_total = float(linha["valor_total"])
+
+    print(f"{linha["produto"]} - {linha["mes"]}: {quantidade} unidades, R${valor_total:.2f} ")
