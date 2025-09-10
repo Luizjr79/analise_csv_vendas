@@ -40,7 +40,11 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
 
   # Descobrir o mês campeão de vendas
   mes_campeao = max(faturamento_por_mes, key=faturamento_por_mes.get)
-  print(f"\n O mês de {mes} foi o campeão de faturamento, com R$ {faturamento_por_mes[mes]:.2f}")
+  print(f"\n O mês de {mes_campeao} foi o campeão de faturamento, com R$ {faturamento_por_mes[mes_campeao]:.2f}")
+
+  # Descobrir o mês com menor faturamento
+  mes_pior = min(faturamento_por_mes, key=faturamento_por_mes.get)
+  print(f"\n O mês de {mes_pior} apresentou o menor faturamento, com R$ {faturamento_por_mes[mes_pior]:.2f}")
 
   print("\n===== FATURAMENTO SEMESTRE =====")
   print(f"O faturamento total do semestre é R$ {faturamento_total:.2f}")
