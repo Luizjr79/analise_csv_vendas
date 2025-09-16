@@ -60,8 +60,13 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
   print("\n===== MÊS COM MENOR FATURAMENTO =====")
   print(f"\nO mês de {mes_pior} apresentou o menor faturamento, com R$ {faturamento_por_mes[mes_pior]:.2f}")
 
-  # Descobrir o setor com maior faturamento
-  setor_campeao = max(faturamento_setor,key=faturamento_setor.get)
+  # Descobrir o faturamento por setor
+  print("\n===== FATURAMENTO POR SETOR =====")
+  for setor, valor in faturamento_setor.items():
+      print(f"O setor de {setor} faturou R${valor:.2f}")
+
+  # Informar o setor com maior faturamento no semestre
+  setor_campeao = max(faturamento_setor, key=faturamento_setor.get)
   print("\n===== SETOR COM MAIOR FATURAMENTO =====")
   print(f"\nO setor de {setor_campeao} foi o setor com maior faturamento no semestre, com R${faturamento_setor[setor_campeao]:.2f}")
   
@@ -70,4 +75,10 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
 
   # Descobrir o produto com maior quantidade de vendas  quantidade_vendida
   produto_campeao = max(quantidade_vendas, key=quantidade_vendas.get)
-  print(f"\nO produto {produto_campeao} foi o mais vendido do semestre, com {quantidade_vendas[produto_campeao]} vendas")
+  print("\n===== PRODUTO COM MAIS UNIDADES VENDIDAS =====")
+  print(f"\nO produto {produto_campeao} foi o mais vendido do semestre, com {quantidade_vendas[produto_campeao]} unidades")
+
+  # Descobrir o produto com menor quantidade de vendas
+  produto_pior = min(quantidade_vendas, key=quantidade_vendas.get)
+  print("\n===== PRODUTO COM MENOS UNIDADES VENDIDAS =====")
+  print(f"\nO produto {produto_pior} foi o menos vendido no semestre, com {quantidade_vendas[produto_pior]} unidades")
