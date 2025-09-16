@@ -14,8 +14,9 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
 
   faturamento_total = 0
   faturamento_por_mes = {} # dicionário para guardar os valores por mês
-  quantidade_vendas = {}
-  faturamento_setor = {}
+  quantidade_vendas = {} # dicionário para quantidade de vendas
+  faturamento_setor = {} # dicionário para faturamento por setor
+  faturamento_produto = {} # dicionário para faturamento por produto
 
   for linha in leitor: # Convertendo os valores numéricos de string -> int
     quantidade = int(linha["quantidade_vendida"])
@@ -34,11 +35,15 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
     if setor not in faturamento_setor:
       faturamento_setor[setor] = 0
 
+    if produto not in faturamento_produto:
+      faturamento_produto[produto] = 0
+
     # Acumula o valor no mês correspondente
     faturamento_por_mes[mes] += valor_total
     faturamento_total += valor_total # Soma o valor total ao acumulador
     quantidade_vendas[produto] += quantidade
     faturamento_setor[linha["setor"]] += valor_total
+    faturamento_produto[produto] += valor_total
 
     print(f"{linha['produto']} - {linha['mes']}: {quantidade} unidades, R$ {valor_total:.2f} ")
 
@@ -82,3 +87,8 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
   produto_pior = min(quantidade_vendas, key=quantidade_vendas.get)
   print("\n===== PRODUTO COM MENOS UNIDADES VENDIDAS =====")
   print(f"\nO produto {produto_pior} foi o menos vendido no semestre, com {quantidade_vendas[produto_pior]} unidades")
+
+  # Informar o produto mais lucrativo
+  produto_lucrativo = max(faturamento_produto, key=faturamento_produto.get)
+  print("\n===== PRODUTO MAIS LUCRATIVO =====")
+  print(f"\nO produto {produto_lucrativo} foi o mais lucrativo, com R$ {faturamento_produto[produto_lucrativo]:.2f}")
