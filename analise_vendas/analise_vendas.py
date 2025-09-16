@@ -92,3 +92,15 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
   produto_lucrativo = max(faturamento_produto, key=faturamento_produto.get)
   print("\n===== PRODUTO MAIS LUCRATIVO =====")
   print(f"\nO produto {produto_lucrativo} foi o mais lucrativo, com R$ {faturamento_produto[produto_lucrativo]:.2f}")
+
+  # Ranking por produtos vendidos
+  print("\n===== RANKING - PRODUTOS MAIS VENDIDOS =====")
+  ranking_vendas = sorted(quantidade_vendas.items(), key=lambda x: x[1], reverse=True)
+  for i, (produto,qtd) in enumerate(ranking_vendas, start=1):
+     print(f"{i}° lugar: {produto} - {qtd} unidades")
+
+  # Ranking por faturamento
+  print("\n===== RANKING - PRODUTOS COM MAIOR FATURAMENTO =====")
+  ranking_faturamento = sorted(faturamento_produto.items(), key=lambda x: x[1], reverse=True)
+  for i, (produto, valor) in enumerate(ranking_faturamento, start=1):
+    print(f"{i}° lugar: {produto} - R$ {valor:.2f}")
