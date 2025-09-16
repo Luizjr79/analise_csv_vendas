@@ -15,6 +15,7 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
   faturamento_total = 0
   faturamento_por_mes = {} # dicionário para guardar os valores por mês
   quantidade_vendas = {}
+  faturamento_setor = {}
 
   for linha in leitor: # Convertendo os valores numéricos de string -> int
     quantidade = int(linha["quantidade_vendida"])
@@ -22,17 +23,22 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
     valor_total = float(linha["valor_total"])
     mes = linha["mes"]
     produto = linha["produto"]
+    setor = linha["setor"]
 
     if produto not in quantidade_vendas:
       quantidade_vendas[produto] = 0
 
     if mes not in faturamento_por_mes: # Se o mês ainda não está no dicionário, cria
       faturamento_por_mes[mes] = 0 
+    
+    if setor not in faturamento_setor:
+      faturamento_setor[setor] = 0
 
     # Acumula o valor no mês correspondente
     faturamento_por_mes[mes] += valor_total
     faturamento_total += valor_total # Soma o valor total ao acumulador
     quantidade_vendas[produto] += quantidade
+    faturamento_setor[linha["setor"]] += valor_total
 
     print(f"{linha['produto']} - {linha['mes']}: {quantidade} unidades, R$ {valor_total:.2f} ")
 
@@ -46,14 +52,21 @@ with open ("analise_vendas/vendas.csv","r",newline = "", encoding="UTF-8") as ar
 
   # Descobrir o mês campeão de vendas
   mes_campeao = max(faturamento_por_mes, key=faturamento_por_mes.get)
+  print("\n===== MÊS COM MAIOR FATURAMENTO =====")
   print(f"\nO mês de {mes_campeao} foi o campeão de faturamento, com R$ {faturamento_por_mes[mes_campeao]:.2f}")
 
   # Descobrir o mês com menor faturamento
   mes_pior = min(faturamento_por_mes, key=faturamento_por_mes.get)
+  print("\n===== MÊS COM MENOR FATURAMENTO =====")
   print(f"\nO mês de {mes_pior} apresentou o menor faturamento, com R$ {faturamento_por_mes[mes_pior]:.2f}")
 
+  # Descobrir o setor com maior faturamento
+  setor_campeao = max(faturamento_setor,key=faturamento_setor.get)
+  print("\n===== SETOR COM MAIOR FATURAMENTO =====")
+  print(f"\nO setor de {setor_campeao} foi o setor com maior faturamento no semestre, com R${faturamento_setor[setor_campeao]:.2f}")
+  
   print("\n===== FATURAMENTO SEMESTRE =====")
-  print(f"O faturamento total do semestre é R$ {faturamento_total:.2f}")
+  print(f"\nO faturamento total do semestre é R$ {faturamento_total:.2f}")
 
   # Descobrir o produto com maior quantidade de vendas  quantidade_vendida
   produto_campeao = max(quantidade_vendas, key=quantidade_vendas.get)
